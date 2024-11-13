@@ -20,7 +20,26 @@ with st.form(key='sample_submission_form'):
     sample_id = st.text_input("Sample ID", placeholder="Enter a unique sample ID")
     sample_type = st.selectbox("Type of Biological Material", ["Tissue", "Cell Culture", "Blood", "Other"])
     collection_date = st.date_input("Date of Collection")
-    extraction_method = st.text_input("Extraction Method", placeholder="Describe the extraction method")
+    
+    # Metadata attributes
+    species = st.text_input("Species", placeholder="Enter species (e.g., human, plant)")
+    institute = st.text_input("Institute/Organization", placeholder="Enter your institute or organization")
+    location = st.text_input("Location of Sample", placeholder="Enter location (e.g., city, country)")
+    biosafety_level = st.selectbox("Biosafety Level", ["1", "2", "3", "4"])
+    
+    # Extraction Method Selection
+    extraction_method = st.selectbox(
+        "Extraction Method",
+        [
+            "None",
+            "Liquid-Liquid Extraction",
+            "Solid Phase Extraction (SPE)",
+            "Solid Phase Micro Extraction (SPME)",
+            "Stir Bar Sorptive Extraction (SBSE)",
+            "Accelerated Solvent Extraction (ASE)"
+        ]
+    )
+    
     additional_notes = st.text_area("Additional Notes", placeholder="Any specific requests or notes")
     
     # Submit button for sample submission
@@ -60,12 +79,16 @@ technique = st.selectbox("Select Technique", ["GC-MS", "LC-MS", "Proteomics", "B
 if technique == "GC-MS":
     st.subheader("Gas Chromatography-Mass Spectrometry (GC-MS)")
     st.write("""
-    GC-MS is a powerful analytical technique used for separating and analyzing compounds that can be vaporized without 
-    decomposition. It is widely used in metabolomics for analyzing volatile and semi-volatile compounds.
+    GC-MS is widely used in metabolomics for analyzing volatile and semi-volatile compounds.
 
-    **Sample Preparation**:
-    - Ensure proper sample preparation including derivatization if necessary.
+    **Extraction Methods**:
+    - **Liquid-Liquid Extraction**: Commonly used for extracting compounds from biological matrices.
+    - **Solid Phase Extraction (SPE)**: Useful for isolating analytes from complex mixtures.
+    - **Solid Phase Micro Extraction (SPME)**: A solvent-free method ideal for volatile compounds.
     
+    **Sample Preparation**:
+    - Derivatization is often required to make non-volatile compounds volatile enough for analysis.
+
     **Submission Protocol**:
     - Submit samples in appropriate vials with clear labeling.
     
@@ -79,11 +102,14 @@ if technique == "GC-MS":
 elif technique == "LC-MS":
     st.subheader("Liquid Chromatography-Mass Spectrometry (LC-MS)")
     st.write("""
-    LC-MS combines the physical separation capabilities of liquid chromatography with the mass analysis capabilities 
-    of mass spectrometry. It is frequently used in metabolomics for analyzing non-volatile compounds.
+    LC-MS combines liquid chromatography with mass spectrometry, frequently used in metabolomics.
+
+    **Extraction Methods**:
+    - **Liquid-Liquid Extraction**: Effective for separating analytes based on solubility.
+    - **Solid Phase Extraction (SPE)**: Useful for cleanup and concentration of samples prior to analysis.
 
     **Sample Preparation**:
-    - Follow established protocols for sample extraction and cleanup.
+    - Ensure proper extraction and cleanup protocols are followed.
 
     **Submission Protocol**:
     - Samples should be submitted in appropriate containers with detailed information on extraction methods.
@@ -98,26 +124,29 @@ elif technique == "LC-MS":
 elif technique == "Proteomics":
     st.subheader("Proteomics")
     st.write("""
-    Proteomics involves the large-scale study of proteins, particularly their functions and structures. It is essential 
-    in understanding biological processes at a molecular level.
+   Proteomics involves the large-scale study of proteins and is essential in understanding biological processes.
 
-    **Sample Preparation**:
-    - Proper protein extraction protocols must be followed to maintain sample integrity.
+   **Extraction Methods**:
+   - **Liquid-Liquid Extraction**: Commonly used for protein extraction from biological samples.
+   - **Precipitation Methods**: Such as acetone or trichloroacetic acid precipitation to concentrate proteins.
 
-    **Submission Protocol**:
-    - Clearly label all protein samples and provide detailed information about the extraction methods used.
+   **Sample Preparation**:
+   - Proper protein extraction protocols must be followed to maintain sample integrity.
 
-    **Data Handling**:
-    - Data will include protein identification and quantification results, which should be securely stored.
+   **Submission Protocol**:
+   - Clearly label all protein samples and provide detailed information about the extraction methods used.
 
-    **Instruments Used**:
-    - Mass spectrometers such as Q-TOF or Orbitrap systems are commonly utilized in proteomic studies.
-    """)
+   **Data Handling**:
+   - Data will include protein identification and quantification results, which should be securely stored.
+
+   **Instruments Used**:
+   - Mass spectrometers such as Q-TOF or Orbitrap systems are commonly utilized in proteomic studies.
+   """)
 
 elif technique == "Bioinformatics":
-    st.subheader("Bioinformatics Support")
-    st.write("""
-    Bioinformatics is crucial for analyzing complex biological data generated from metabolomics and proteomics studies. 
+   st.subheader("Bioinformatics Support")
+   st.write("""
+   Bioinformatics is crucial for analyzing complex biological data generated from metabolomics and proteomics studies. 
    
    **Data Analysis**:
    - Engage with bioinformaticians early in your project to discuss data management strategies.
