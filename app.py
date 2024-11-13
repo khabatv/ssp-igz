@@ -52,36 +52,88 @@ with st.form(key='scheduling_form'):
 # Analytical Techniques Section
 st.header("Select Analytical Technique")
 st.write("""
-Choose the analytical technique you would like to use for your samples.
+Choose the analytical technique you would like to use for your samples. Each technique has specific guidelines.
 """)
 
 technique = st.selectbox("Select Technique", ["GC-MS", "LC-MS", "Proteomics", "Bioinformatics"])
 
 if technique == "GC-MS":
+    st.subheader("Gas Chromatography-Mass Spectrometry (GC-MS)")
     st.write("""
-    **Gas Chromatography-Mass Spectrometry (GC-MS)**: 
-    Ensure proper sample preparation and follow GC-MS protocols. Calibration of instruments is essential before analysis.
+    GC-MS is a powerful analytical technique used for separating and analyzing compounds that can be vaporized without 
+    decomposition. It is widely used in metabolomics for analyzing volatile and semi-volatile compounds.
+
+    **Sample Preparation**:
+    - Ensure proper sample preparation including derivatization if necessary.
+    
+    **Submission Protocol**:
+    - Submit samples in appropriate vials with clear labeling.
+    
+    **Data Handling**:
+    - Raw data will include mass spectra and chromatograms. Ensure proper storage and backup of raw data files.
+
+    **Instruments Used**:
+    - High-resolution mass spectrometers such as those from ThermoFisher are commonly used in GC-MS analysis.
     """)
+
 elif technique == "LC-MS":
+    st.subheader("Liquid Chromatography-Mass Spectrometry (LC-MS)")
     st.write("""
-    **Liquid Chromatography-Mass Spectrometry (LC-MS)**: 
-    Follow established LC-MS protocols tailored for targeted or untargeted analyses. Discuss method development with SSP staff if analyzing novel compounds.
+    LC-MS combines the physical separation capabilities of liquid chromatography with the mass analysis capabilities 
+    of mass spectrometry. It is frequently used in metabolomics for analyzing non-volatile compounds.
+
+    **Sample Preparation**:
+    - Follow established protocols for sample extraction and cleanup.
+
+    **Submission Protocol**:
+    - Samples should be submitted in appropriate containers with detailed information on extraction methods.
+
+    **Data Handling**:
+    - Data reports will include identified metabolites with m/z values, retention times, and peak intensities.
+
+    **Instruments Used**:
+    - The Orbitrap Exploris 240 is an example of a high-resolution mass spectrometer used in LC-MS applications.
     """)
+
 elif technique == "Proteomics":
+    st.subheader("Proteomics")
     st.write("""
-    **Proteomics**: 
-    For proteomic analyses, ensure that protein extraction protocols are meticulously followed. Consult with bioinformaticians in SSP for data interpretation related to protein identification and quantification.
+    Proteomics involves the large-scale study of proteins, particularly their functions and structures. It is essential 
+    in understanding biological processes at a molecular level.
+
+    **Sample Preparation**:
+    - Proper protein extraction protocols must be followed to maintain sample integrity.
+
+    **Submission Protocol**:
+    - Clearly label all protein samples and provide detailed information about the extraction methods used.
+
+    **Data Handling**:
+    - Data will include protein identification and quantification results, which should be securely stored.
+
+    **Instruments Used**:
+    - Mass spectrometers such as Q-TOF or Orbitrap systems are commonly utilized in proteomic studies.
     """)
+
 elif technique == "Bioinformatics":
+    st.subheader("Bioinformatics Support")
     st.write("""
-    **Bioinformatics**: 
-    Engage with bioinformaticians early in your project to discuss data management strategies and analysis plans. Attend workshops offered by SSP on bioinformatics tools relevant to metabolomic and proteomic data analysis.
-    """)
+    Bioinformatics is crucial for analyzing complex biological data generated from metabolomics and proteomics studies. 
+   
+   **Data Analysis**:
+   - Engage with bioinformaticians early in your project to discuss data management strategies.
+
+   **Tools Available**:
+   - Various software tools are available for metabolomic and proteomic data analysis; workshops may be offered by SSP.
+
+   **Data Management**:
+   - Ensure proper documentation of all analyses performed and maintain backups of processed data.
+   """)
 
 # Data Handling Guidelines Section
 st.header("Data Handling and Documentation")
 st.write("""
-After analysis completion, you will receive a report detailing identified metabolites or proteins. Ensure that raw data files are securely stored and backed up regularly.
+After analysis completion, you will receive a report detailing identified metabolites or proteins. Ensure that raw 
+data files are securely stored and backed up regularly.
 """)
 
 # Footer Information
