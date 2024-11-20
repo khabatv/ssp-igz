@@ -3,6 +3,9 @@ import streamlit as st
 # Set the title of the app
 st.title("Science Support Platform (SSP) Submission Portal")
 
+# Enable test mode
+test_mode = st.sidebar.checkbox("Enable Test Mode (For Testing Only)")
+
 # Introduction
 st.write("""
 Welcome to the SSP Submission Portal. This application allows you to submit your research samples, schedule experiments, 
@@ -40,10 +43,12 @@ if approval_mechanism == "Email Confirmation":
     send_email = st.button("Send Approval Request")
 
     if send_email:
-        # Here, integrate an email-sending function (e.g., using smtplib or an API)
+        # Simulated email sending process
         st.success(f"Approval request sent to {email}. Please wait for confirmation.")
-        # Simulating approval for demonstration
-        approval_granted = st.checkbox("Simulate Approval (for testing only)")
+    
+    # Cheat Code for Testing
+    if test_mode:
+        approval_granted = st.checkbox("Simulate Approval (Cheat Code for Testing)")
 
 # Mechanism 2: Approval Code
 elif approval_mechanism == "Approval Code":
@@ -57,6 +62,12 @@ elif approval_mechanism == "Approval Code":
         approval_granted = True
     elif approval_code_input:
         st.error("Invalid approval code. Please try again.")
+
+    # Cheat Code for Testing
+    if test_mode:
+        if st.button("Use Cheat Code for Approval"):
+            st.success("Cheat Code Activated: Approval granted!")
+            approval_granted = True
 
 # Mechanism 3: Manual Confirmation
 elif approval_mechanism == "Manual Confirmation":
@@ -72,6 +83,12 @@ elif approval_mechanism == "Manual Confirmation":
         approval_granted = True
     elif responsible_login or responsible_password:
         st.error("Invalid credentials. Please try again.")
+
+    # Cheat Code for Testing
+    if test_mode:
+        if st.button("Activate Cheat Code for Manual Login"):
+            st.success("Cheat Code Activated: Approval granted!")
+            approval_granted = True
 
 # Proceed Only if Approval is Granted
 if approval_granted:
