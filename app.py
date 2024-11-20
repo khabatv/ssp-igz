@@ -22,14 +22,61 @@ responsible_person = st.text_input(
     "Responsible Person for Analysis and Scheduling (Full Name)",
     placeholder="Enter the name of the SSP staff responsible for your project"
 )
-agreement_confirmation = st.checkbox(
-    "I confirm that the responsible person has agreed to oversee this project."
-)
-if not agreement_confirmation:
-    st.warning("You must confirm the agreement of the responsible person before proceeding.")
 
-# Proceed Only if Agreements Are Confirmed
-if agreed_guidelines and agreement_confirmation:
+st.header("Approval Mechanisms")
+approval_mechanism = st.radio(
+    "Select the mechanism for approval by the responsible person:",
+    ["Email Confirmation", "Approval Code", "Manual Confirmation"]
+)
+
+approval_granted = False  # Default state
+
+# Mechanism 1: Email Confirmation
+if approval_mechanism == "Email Confirmation":
+    st.write("""
+    An email will be sent to the responsible person for approval. The process will only proceed after confirmation.
+    """)
+    email = st.text_input("Responsible Person's Email", placeholder="Enter the email address")
+    send_email = st.button("Send Approval Request")
+
+    if send_email:
+        # Here, integrate an email-sending function (e.g., using smtplib or an API)
+        st.success(f"Approval request sent to {email}. Please wait for confirmation.")
+        # Simulating approval for demonstration
+        approval_granted = st.checkbox("Simulate Approval (for testing only)")
+
+# Mechanism 2: Approval Code
+elif approval_mechanism == "Approval Code":
+    st.write("""
+    The responsible person will provide you with an approval code to proceed.
+    """)
+    approval_code_input = st.text_input("Enter Approval Code", type="password")
+    valid_approval_code = "SSP2024"  # Example code; replace with a real system
+    if approval_code_input == valid_approval_code:
+        st.success("Approval granted!")
+        approval_granted = True
+    elif approval_code_input:
+        st.error("Invalid approval code. Please try again.")
+
+# Mechanism 3: Manual Confirmation
+elif approval_mechanism == "Manual Confirmation":
+    st.write("""
+    The responsible person must log in and approve this request manually.
+    """)
+    responsible_login = st.text_input("Responsible Person's Username", placeholder="Enter username")
+    responsible_password = st.text_input("Responsible Person's Password", type="password")
+    valid_username = "responsible_user"  # Example credentials
+    valid_password = "securepassword"
+    if responsible_login == valid_username and responsible_password == valid_password:
+        st.success("Approval granted!")
+        approval_granted = True
+    elif responsible_login or responsible_password:
+        st.error("Invalid credentials. Please try again.")
+
+# Proceed Only if Approval is Granted
+if approval_granted:
+    st.success("Approval confirmed! You may now proceed.")
+
     # Sample Submission Section
     st.header("Sample Submission")
     st.write("""
@@ -89,38 +136,5 @@ if agreed_guidelines and agreement_confirmation:
             st.success(f"Experiment scheduled successfully for {contact_name} on {preferred_date}!")
             # Here you can add code to save this data or send it to a backend
 
-    # Analytical Techniques Section
-    st.header("Select Analytical Technique")
-    st.write("""
-    Choose the analytical technique you would like to use for your samples. Each technique has specific guidelines.
-    """)
-
-    technique = st.selectbox("Select Technique", ["GC-MS", "LC-MS", "Proteomics", "Bioinformatics"])
-
-    if technique == "GC-MS":
-        st.subheader("Gas Chromatography-Mass Spectrometry (GC-MS)")
-        st.write("""
-        Follow the SSP guidelines for GC-MS, including proper extraction methods and submission protocols.
-        """)
-    elif technique == "LC-MS":
-        st.subheader("Liquid Chromatography-Mass Spectrometry (LC-MS)")
-        st.write("""
-        Follow the SSP guidelines for LC-MS, ensuring proper sample preparation and labeling.
-        """)
-    elif technique == "Proteomics":
-        st.subheader("Proteomics")
-        st.write("""
-        Ensure proper extraction and documentation as per SSP's guidelines for proteomic studies.
-        """)
-    elif technique == "Bioinformatics":
-        st.subheader("Bioinformatics Support")
-        st.write("""
-        Engage early with SSP bioinformaticians and follow data management best practices.
-        """)
-
-# Footer Information
-st.write("""
-For further assistance, please contact Nicole van Dam at [vandam@igzev.de](mailto:vandam@igzev.de).
-""")
-
-# Run the app with: streamlit run app.py
+else:
+    st.warning("Approval is required to proceed with submission and scheduling.")
