@@ -94,6 +94,118 @@ elif approval_mechanism == "Manual Confirmation":
 if approval_granted:
     st.success("Approval confirmed! You may now proceed.")
 
+    # Category Selection
+    st.header("Select Analysis Category")
+    category = st.selectbox("Choose a category", ["LC-MS", "GC-MS", "Proteomics", "Bioinformatics", "Data Management"])
+
+    # Guidelines and Forms Section
+    st.header("Guidelines and Forms")
+    st.write("Please review the guidelines and forms for your selected category before proceeding.")
+
+    if category == "LC-MS":
+        with st.expander("LC-MS Guidelines and Forms"):
+            st.write("""
+            **Guidelines:**
+            - [LC-MS General Guidelines](/path/to/lcms_guidelines.pdf)
+            - [Sample Preparation for LC-MS](/path/to/lcms_sample_prep.pdf)
+            - [Data Submission Guidelines](/path/to/lcms_data_submission.pdf)
+
+            **Forms:**
+            - [LC-MS Sample Submission Form](/path/to/lcms_sample_form.pdf)
+            - [LC-MS Experiment Request Form](/path/to/lcms_experiment_form.pdf)
+            """)
+    elif category == "GC-MS":
+        with st.expander("GC-MS Guidelines and Forms"):
+            st.write("""
+            **Guidelines:**
+            - [GC-MS General Guidelines](/path/to/gcms_guidelines.pdf)
+            - [Sample Preparation for GC-MS](/path/to/gcms_sample_prep.pdf)
+            - [Data Submission Guidelines](/path/to/gcms_data_submission.pdf)
+
+            **Forms:**
+            - [GC-MS Sample Submission Form](/path/to/gcms_sample_form.pdf)
+            - [GC-MS Experiment Request Form](/path/to/gcms_experiment_form.pdf)
+            """)
+    elif category == "Proteomics":
+        with st.expander("Proteomics Guidelines and Forms"):
+            st.write("""
+            **Guidelines:**
+            - [Proteomics General Guidelines](/path/to/proteomics_guidelines.pdf)
+            - [Sample Preparation for Proteomics](/path/to/proteomics_sample_prep.pdf)
+            - [Data Submission Guidelines](/path/to/proteomics_data_submission.pdf)
+
+            **Forms:**
+            - [Proteomics Sample Submission Form](/path/to/proteomics_sample_form.pdf)
+            - [Proteomics Experiment Request Form](/path/to/proteomics_experiment_form.pdf)
+            """)
+    elif category == "Bioinformatics":
+        with st.expander("Bioinformatics Guidelines and Forms"):
+            st.write("""
+            **Guidelines:**
+            - [Bioinformatics General Guidelines](/path/to/bioinformatics_guidelines.pdf)
+            - [Data Submission Guidelines](/path/to/bioinformatics_data_submission.pdf)
+
+            **Forms:**
+            - [Bioinformatics Analysis Request Form](/path/to/bioinformatics_request_form.pdf)
+            """)
+    elif category == "Data Management":
+        with st.expander("Data Management Guidelines and Forms"):
+            st.write("""
+            **Guidelines:**
+            - [Data Management General Guidelines](/path/to/data_management_guidelines.pdf)
+            - [Data Storage and Sharing Guidelines](/path/to/data_storage_guidelines.pdf)
+
+            **Forms:**
+            - [Data Management Plan Template](/path/to/data_management_plan_template.docx)
+            - [Data Sharing Agreement Form](/path/to/data_sharing_agreement.pdf)
+            """)
+
+    # Common Fields for All Categories
+    st.header("General Information")
+    with st.form(key='general_info_form'):
+        collaborator_name = st.text_input("Collaborator Name", placeholder="Enter your name")
+        affiliation = st.text_input("Affiliation", placeholder="Enter your affiliation")
+        email_address = st.text_input("Email Address", placeholder="Enter your email address")
+        project_name = st.text_input("Project Name", placeholder="Enter the project name")
+        project_abstract = st.text_area("Project Abstract", placeholder="Provide a brief abstract of the project")
+        hypothesis = st.text_area("Hypothesis", placeholder="State your hypothesis")
+        funded_project = st.radio("Is this part of a funded project?", ["Yes", "No"])
+        if funded_project == "Yes":
+            funded_project_name = st.text_input("Name of Funded Project", placeholder="Enter the name of the funded project")
+            responsible_person_project = st.text_input("Responsible Person for Project", placeholder="Enter the name of the responsible person")
+            responsible_institute_project = st.text_input("Institute for Project", placeholder="Enter the name of the institute")
+        type_of_collaboration = st.multiselect("Type of Collaboration", ["Consultant", "Experiment Design", "Analysis"])
+        if "Analysis" in type_of_collaboration:
+            analysis_type = st.text_input("Type of Analysis", placeholder="Enter the type of analysis")
+            scientific_name_organism = st.text_input("Scientific Name of Organism", placeholder="Enter the scientific name of the organism")
+            tissue = st.text_input("Tissue", placeholder="Enter the tissue type")
+            number_of_samples = st.number_input("Number of Samples", min_value=1)
+            biosafety_level = st.selectbox("Biosafety Level", ["S1", "S2", "S3"])
+            state_of_sample = st.selectbox("State of Sample", ["Fresh", "Dried", "Freeze-dried", "Extract"])
+            additional_details = st.text_area("Additional Details", placeholder="Provide any additional details")
+            number_of_treatments = st.number_input("Number of Treatments", min_value=1)
+            number_of_biological_replicates = st.number_input("Number of Biological Replicates", min_value=1)
+        trial_test = st.radio("Do you need a trial test on a few samples?", ["Yes", "No"])
+        if trial_test == "Yes":
+            optimized_protocols = st.radio("Are there optimized protocols for the analysis?", ["Yes", "No"])
+            if optimized_protocols == "Yes":
+                protocol_details = st.text_area("Details about the optimized protocol", placeholder="Provide details about the optimized protocol")
+            else:
+                protocol_setup = st.radio("Does it need a new protocol setup or is there a standard protocol?", ["New Protocol Setup", "Standard Protocol"])
+        training_needed = st.radio("Do you need training?", ["Yes", "No"])
+        if training_needed == "Yes":
+            training_level = st.selectbox("Training Level", ["Basic", "Intermediate", "Professional", "Hands-on"])
+        submit_general_info = st.form_submit_button("Submit General Information")
+
+    # Calendar for Booking Consultation
+    st.header("Book Consultation")
+    st.write("Please select a date and time for your consultation with the respective specialist.")
+    consultation_date = st.date_input("Consultation Date")
+    consultation_time = st.time_input("Consultation Time")
+    book_consultation = st.button("Book Consultation")
+    if book_consultation:
+        st.success(f"Consultation booked successfully for {consultation_date} at {consultation_time}!")
+
     # Sample Submission Section
     st.header("Sample Submission")
     st.write("""
